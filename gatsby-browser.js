@@ -125,6 +125,42 @@ export const onInitialClientRender = () => {
             `
             document.head.appendChild(jipt)
         }
+
+        const rudderstack_init_script = document.createElement('script')
+        rudderstack_init_script.type = 'text/javascript'
+        rudderstack_init_script.text = `
+            rudderanalytics = window.rudderanalytics = [];
+            var methods = [
+                'load',
+                'page',
+                'track',
+                'identify',
+                'alias',
+                'group',
+                'ready',
+                'reset',
+                'getAnonymousId',
+                'setAnonymousId',
+            ];
+            for (var i = 0; i < methods.length; i++) {
+                var method = methods[i];
+                rudderanalytics[method] = (function (methodName) {
+                    return function () {
+                        rudderanalytics.push([methodName].concat(Array.prototype.slice.call(arguments)));
+                    };
+                })(method);
+            }
+            rudderanalytics.load('${
+                isProduction()
+                    ? process.env.RUDDERSTACK_PRODUCTION_KEY
+                    : process.env.RUDDERSTACK_STAGING_KEY
+            }', 'https://deriv-dataplane.rudderstack.com');
+        `
+        document.head.appendChild(rudderstack_init_script)
+
+        const rudderstack_sdk_script = document.createElement('script')
+        rudderstack_sdk_script.src = 'https://cdn.rudderlabs.com/rudder-analytics.min.js'
+        document.head.appendChild(rudderstack_sdk_script)
     }
 }
 
