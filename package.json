@@ -17,7 +17,7 @@
         "@radix-ui/react-navigation-menu": "^1.1.2",
         "@svgr/webpack": "^8.0.1",
         "@tanstack/react-table": "^8.8.5",
-        "@vercel/gatsby-plugin-vercel-builder": "^0.1.2",
+        "@vercel/gatsby-plugin-vercel-builder": "^2.0.6",
         "cli-select": "^1.1.2",
         "clsx": "^1.2.1",
         "commander": "^8.3.0",
